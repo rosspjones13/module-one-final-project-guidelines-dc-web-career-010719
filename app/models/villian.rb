@@ -8,7 +8,7 @@ class Villain < ActiveRecord::Base
     "I will make you kneel before me!"]
   end
 
-  def battle(:superhero, :villain)
+  def battle(superhero:, villain:)
     villain.catchprases
     hero_score = (superhero.power + superhero.combat) + rand(50)
     villain_score = (villain.power + villain.combat) + rand(50)
