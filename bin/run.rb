@@ -1,5 +1,7 @@
 require_relative '../config/environment'
 
 
-binding.pry
+CLI.welcome
+CLI.get_todays_hero
+CLI.display_menu
 puts "HELLO WORLD"
