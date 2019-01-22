@@ -1,8 +1,7 @@
 require_relative '../config/environment'
 
 
-barry = Superhero.first
-puts barry.power
-barry.train
-puts barry.power
+CLI.welcome
+CLI.get_todays_hero
+CLI.display_menu
 puts "HELLO WORLD"
