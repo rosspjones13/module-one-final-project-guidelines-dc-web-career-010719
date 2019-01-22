@@ -6,3 +6,8 @@ task :console do
   ActiveRecord::Base.logger = Logger.new(STDOUT)
   Pry.start
 end
+
+# namespace :db do
+#   desc 'migrate changes to your database'
+#   task :
+# end
