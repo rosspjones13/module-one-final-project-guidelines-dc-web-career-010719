@@ -3,8 +3,8 @@ require 'pry'
 class CLI
   attr_accessor :todays_hero, :enemy
 
+
   def welcome
-    
     system "clear"
     puts "Welcome to Super Fight Bros. The goal of this game is to become the ultimate fight master.
 When you create a new user, your Power  and Combat are automatically set at 25. Through a series of
@@ -23,39 +23,32 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
   end
 
   def display_menu
-    puts "Hi #{@todays_hero.name}! What would you like to do?"
+    prompt = TTY::Prompt.new
+    puts "Hi #{@todays_hero.name}!"
     puts "***************************"
-    puts "1. Start a fight"
-    puts "2. Train for battle"
-    puts "3. Display Stats"
-    puts "4. Display Instructions"
-    puts "5. Exit"
-    self.start_game_loop
+    selection = prompt.select("What would you like to do?") do |menu|
+      menu.choice 'Start a fight', 1
+      menu.choice 'Train for battle', 2
+      menu.choice 'Display Stats', 3
+      menu.choice 'Display Instructions', 4
+      menu.choice 'Exit', 5
+    end
+    self.start_game_loop(selection)
   end
 
-  def start_game_loop
-    input = gets.chomp.upcase
-    # while input.upcase != "EXIT"
-    case input
-    when "1"
-      start_battle
-      
-
-    when "2"
+  def start_game_loop(selection)
+    case selection
+    when 1
+      new_fight = Fight.new(superhero: todays_hero, villain: enemy)
+      new_fight.start_battle(todays_hero)
+    when 2
       @todays_hero.train
-      
-
-    when "3"
+    when 3
       @todays_hero.display_stats
-      
-    when "4"
+    when 4
       display_instructions
-      
-    when "EXIT"
-      return
-    else
-      puts "\nSorry, #{input} is not a valid option. Please try again or enter Exit to end program."
-      
+    when 5
+      return      
     end
     display_menu
   end
