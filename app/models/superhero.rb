@@ -4,12 +4,13 @@ class Superhero < ActiveRecord::Base
 
   def train
   #increases superhero's power by ten and saves to the database. Power does not go over 100.
+    system "clear"
     self.power += 10
     if self.power >= 100
       self.power = 100
     end
     # self.save
-    puts "Your power is now #{self.power}."
+    puts "Your power is now #{self.power}.\n\n"
   end
 
   def display_tips
@@ -17,6 +18,7 @@ class Superhero < ActiveRecord::Base
   end
 
   def display_stats
+    system "clear"
     puts "Power: #{self.power}. Combat #{self.combat}"
     if self.power < 50 || self.combat < 50
       puts display_tips
