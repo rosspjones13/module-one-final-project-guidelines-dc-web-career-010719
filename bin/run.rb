@@ -9,4 +9,5 @@ new_game.display_menu
 
 puts new_game.display_board
 
+
 puts "Go forth and prosper"
