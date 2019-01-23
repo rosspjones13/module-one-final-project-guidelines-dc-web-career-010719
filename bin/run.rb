@@ -9,5 +9,8 @@ new_game.display_menu
 
 puts new_game.display_board
 
+# Quest.find(1).start_quest
+new_game.run_quest
 
+binding.pry
 puts "Go forth and prosper"

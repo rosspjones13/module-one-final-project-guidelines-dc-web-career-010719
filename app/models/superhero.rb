@@ -26,4 +26,8 @@ class Superhero < ActiveRecord::Base
       puts "Do not be afraid of your power. Start a new challenge."
     end
   end
+
+  def increase_power_by(power_update)
+    self.power += power_update
+  end
 end

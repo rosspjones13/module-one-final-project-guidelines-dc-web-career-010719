@@ -106,4 +106,12 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
     end while !input_check("M")
   end
 
+
+  def run_quest
+    Quest.show_quests
+    journey = Quest.find_quest
+    power_update = journey.play_quest
+    @todays_hero.increase_power_by(power_update)
+  end
+
 end
