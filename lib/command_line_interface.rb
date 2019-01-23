@@ -23,7 +23,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
       q.convert -> (input) { !input.match(/^agree$/i).nil?}
     end
     if new_user
-      return
+      @todays_hero = create_new_player
     else
       select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), per_page: 15, filter: true)
       @todays_hero = Superhero.find_by(name: select_hero)
@@ -81,7 +81,8 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
   end
 
   def create_new_player
-
+    hero_name = TTY::Prompt.new.ask('What is your Superhero\'s name?', default: 'Anonymous')
+    Superhero.new(name: hero_name)
   end
 
   def input_check(check)
