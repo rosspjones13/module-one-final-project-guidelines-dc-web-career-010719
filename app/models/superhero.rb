@@ -8,7 +8,20 @@ class Superhero < ActiveRecord::Base
     if self.power >= 100
       self.power = 100
     end
-    self.save
-    puts "Your new power is  now #{self.power}."
+    # self.save
+    puts "Your power is now #{self.power}."
+  end
+
+  def display_tips
+    ["Consider training or joining a quest to increase your power.", "Consider fighing a weaker opponent to increase your combat."].sample
+  end
+
+  def display_stats
+    puts "Power: #{self.power}. Combat #{self.combat}"
+    if self.power < 50 || self.combat < 50
+      puts display_tips
+    elsif
+      puts "Do not be afraid of your power. Start a new challenge."
+    end
   end
 end
