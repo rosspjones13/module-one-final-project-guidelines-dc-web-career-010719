@@ -12,35 +12,46 @@ class CLI
   end
 
   def self.display_menu
-    puts "What would you like to do?
-  ***************************
-  1. Start a fight
-  2. Exit"
-  self.start_game_loop
+    puts "Hi #{@todays_hero}! What would you like to do?"
+    puts "***************************"
+    puts "1. Start a fight"
+    puts "2. Exit"
+    self.start_game_loop
   end
 
   def self.start_game_loop
-    input = gets.chomp.to_i
+    input = gets.chomp
     while
-      input != 2
+      # input != 2
       case input
-      when 1
+      when "1"
         start_battle
-        puts "***************************"
-        display_menu
+
+      when "2"
         break
+
+      when "Exit"
+        break
+
+      when "exit"
+        break
+
       else
+        puts "\nSorry, #{input} is not a valid option. Please try again."
         display_menu
-        break
       end
     end
   end
 
   def self.start_battle
-    puts "Who would you like to battle?"
+    puts "\n***************************\n"
+    puts "\nWho would you like to battle?\n"
+    display_villains
+
     input = gets.chomp
     @enemy = Villain.find_by(name: input)
     battle(superhero: @todays_hero, villain: @enemy)
+    display_menu
   end
 
   # lets the villain say a catchphrase
@@ -73,8 +84,10 @@ class CLI
     winner.combat += 10
   end
 
-  # def get_input
-  #   @last_input = gets.chomp
-  # end
+def self.display_villains
+  Villain.order(power: :desc).each do |villain|
+    puts "#{villain.name} | Power: #{villain.power} | Combat: #{villain.combat}"
+  end
+end
 
 end
