@@ -17,21 +17,31 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
   def set_todays_hero
     system "clear"
-    puts "Who would you like to be today?"
-    input = gets.chomp
-    @todays_hero = Superhero.find_by(name: input)
+    new_user = TTY::Prompt.new.yes?("Would you like to create a new character?") do |q|
+      q.positive 'Yes'
+      q.negative 'No'
+      q.convert -> (input) { !input.match(/^agree$/i).nil?}
+    end
+    if new_user
+      return
+    else
+      select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), per_page: 15, filter: true)
+      @todays_hero = Superhero.find_by(name: select_hero)
+    end
   end
 
   def display_menu
-    prompt = TTY::Prompt.new
     puts "Hi #{@todays_hero.name}!"
     puts "***************************"
-    selection = prompt.select("What would you like to do?") do |menu|
+    selection = TTY::Prompt.new.select("What would you like to do?", cycle: true) do |menu|
+      menu.enum '>'
+
       menu.choice 'Start a fight', 1
       menu.choice 'Train for battle', 2
       menu.choice 'Display Stats', 3
       menu.choice 'Display Instructions', 4
-      menu.choice 'Exit', 5
+      menu.choice 'Display Leaderboard', 5
+      menu.choice 'Exit', 6
     end
     self.start_game_loop(selection)
   end
@@ -48,6 +58,8 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     when 4
       display_instructions
     when 5
+      display_board
+    when 6
       return      
     end
     display_menu
@@ -55,20 +67,17 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
   def parse_players(player)
     # binding.pry
-    #displays the superhero leaderboard by power
-    board = player.order(power: :desc).map do |s|
-      [s.name, s.power, s.combat]
+    #displays the superhero leaderboard by combat
+    board = player.each_with_index.map do |s, i|
+      [i+1, s.name, s.power, s.combat]
     end
   end
 
   def display_board
-    header = ['Player', 'Power', 'Combat']
-    rows   = parse_players(Superhero)
+    header = ['#', 'Player', 'Power', 'Combat']
+    rows = parse_players(Superhero.order(combat: :desc))
     table = TTY::Table.new header, rows
-    # table.add_separator
-    # binding.pry
-    # table.style = {:width => 40, :padding_left => 3, :border_x => "=", :border_i => "x"}
-    # table.render width: 80, resize: true
+    puts table.render(:unicode)
   end
 
   def create_new_player

@@ -7,6 +7,6 @@ new_game.set_todays_hero
 system "clear"
 new_game.display_menu
 
-puts new_game.display_board
+new_game.display_board
 
 puts "Go forth and prosper"
