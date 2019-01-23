@@ -12,21 +12,26 @@ class CLI
   end
 
   def self.display_menu
-    puts "What would you like to do?
+    puts "  ***************************
+  What would you like to do?
   ***************************
   1. Start a fight
-  2. Exit"
+  2. Show my stats
+  3. Exit"
   self.start_game_loop
   end
 
   def self.start_game_loop
     input = gets.chomp.to_i
     while
-      input != 2
+      input != 3
       case input
       when 1
         start_battle
-        puts "***************************"
+        display_menu
+        break
+      when 2
+        show_stats
         display_menu
         break
       else
@@ -54,7 +59,11 @@ class CLI
     self.catchprases
     hero_score = (superhero.power + superhero.combat) + rand(50)
     villain_score = (villain.power + villain.combat) + rand(50)
-    self.update_combat(self.declare_winner(hero_score, villain_score) ? superhero : villain)
+    if self.declare_winner(hero_score, villain_score)
+      self.update_combat(superhero, villain)
+    else
+      self.update_combat(villain, superhero)
+    end
   end
 
   def self.declare_winner(hero_score, villain_score)
@@ -69,8 +78,17 @@ class CLI
     end
   end
 
-  def self.update_combat(winner)
+  def self.update_combat(winner, loser)
     winner.combat += 10
+    loser.combat -= 10
+  end
+
+  def self.show_stats
+    puts "  Superhero Stats:
+  ***************************
+  Name   - #{@todays_hero.name}
+  Power  - #{@todays_hero.power}
+  Combat - #{@todays_hero.combat}"
   end
 
   # def get_input
