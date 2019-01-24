@@ -12,3 +12,5 @@ ActiveRecord::Base.logger = nil
 SINATRA_ACTIVESUPPORT_WARNING=false
 require_all 'app'
 require_all 'lib'
+
+#To run RSPEC, change .db to .sqlite
