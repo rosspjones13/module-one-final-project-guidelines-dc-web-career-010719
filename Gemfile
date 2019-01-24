@@ -8,3 +8,9 @@ gem "require_all"
 gem 'tty-table'
 gem 'tty-prompt'
 gem 'rspec'
+# gem 'catpix'
+gem 'artii'
+gem "colorize"
+gem 'rest-client'
+gem 'json'
+# gem 'rmagick'

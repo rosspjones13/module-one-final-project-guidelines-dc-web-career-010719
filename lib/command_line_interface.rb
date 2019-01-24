@@ -6,6 +6,7 @@ class CLI
 
   def welcome
     system "clear"
+    title_print
     puts "Welcome to Super Fight Bros. The goal of this game is to become the ultimate fight master.
 When you create a new user, your Power  and Combat are automatically set at 25. Through a series of
 fights, quests, and tournaments, you can increase these attributes to win more fights and climb the
@@ -17,6 +18,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
   def set_todays_hero
     system "clear"
+    title_print
     new_user = TTY::Prompt.new.yes?("Would you like to create a new character?") do |q|
       q.positive 'Yes'
       q.negative 'No'
@@ -25,23 +27,25 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     if new_user
       @todays_hero = create_new_player
     else
-      select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), per_page: 15, filter: true)
+      select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), 
+        per_page: 15, filter: true)
       @todays_hero = Superhero.find_by(name: select_hero)
     end
   end
 
   def display_menu
+    title_print
     puts "Hi #{@todays_hero.name}!"
     puts "***************************"
-    selection = TTY::Prompt.new.select("What would you like to do?", cycle: true) do |menu|
+    selection = TTY::Prompt.new.select("What would you like to do?", per_page: 10, cycle: true) do |menu|
       menu.enum '>'
 
       menu.choice 'Start a fight', 1
       menu.choice 'Train for battle', 2
-      menu.choice 'Start Quest', 3
-      menu.choice 'Display Stats', 4
-      menu.choice 'Display Instructions', 5
-      menu.choice 'Display Leaderboard', 6
+      menu.choice 'Display Stats', 3
+      menu.choice 'Display Instructions', 4
+      menu.choice 'Display Leaderboard', 5
+      menu.choice 'Show Image', 6
       menu.choice 'Exit', 7
     end
     self.start_game_loop(selection)
@@ -62,6 +66,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
       display_instructions
     when 6
       display_board
+      print_picture("batman.jpg")
     when 7
       return      
     end
@@ -100,6 +105,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
   def display_instructions
     system "clear"
+    title_print
     puts "Instructions:\n"
     puts "Fights: Increase your combat score by initiating fights with villains.\n\n"
     puts "Quests: Boost your power score and increase your chances of winning ore fights by going on a quest.
@@ -157,6 +163,23 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
                *********************************
                     ***********************"
         puts "\n\n\n\nGo Forth and Prosper"
+  end
+  
+  def title_print
+    title = Artii::Base.new :font => 'slant'
+    puts title.asciify('Super Fight Bros.').colorize(:red)
+  end
+
+  def print_picture(image)
+    system "clear"
+    Catpix::print_image image,
+      :limit_x => 0.5,
+      :limit_y => 0,
+      :center_x => true,
+      :center_y => false,
+      :bg => "black",
+      :bg_fill => false,
+      :resolution => "high"
   end
 
 end
