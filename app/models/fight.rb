@@ -5,11 +5,9 @@ class Fight < ActiveRecord::Base
   # starts a battle sequence and calls helper methods display_villains, battle, declare_winner, and update_combat
   def start_battle(todays_hero)
     puts "\n***************************\n"
-    puts "\nWho would you like to battle?\n"
-    display_villains
-
-    input = gets.chomp
-    enemy = Villain.find_by(name: input)
+    selection = display_villains
+    # binding.pry
+    enemy = Villain.find_by(name: selection.split(" | ")[0])
     battle(superhero: todays_hero, villain: enemy)
   end
 
@@ -48,8 +46,10 @@ class Fight < ActiveRecord::Base
 
   # displays the villains leaderboard by power
   def display_villains
-    Villain.order(power: :desc).each do |villain|
-      puts "#{villain.name} | Power: #{villain.power} | Combat: #{villain.combat}"
+    villain_array = Villain.order(power: :desc).map do |villain|
+      "#{villain.name} | Power: #{villain.power} | Combat: #{villain.combat}"
     end
+    selection = TTY::Prompt.new.select("Who would you like to battle?", villain_array, 
+			per_page: 20, filter: true, cycle: true)
   end
 end

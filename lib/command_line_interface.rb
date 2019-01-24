@@ -25,7 +25,8 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     if new_user
       @todays_hero = create_new_player
     else
-      select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), per_page: 15, filter: true)
+      select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), 
+        per_page: 15, filter: true)
       @todays_hero = Superhero.find_by(name: select_hero)
     end
   end
