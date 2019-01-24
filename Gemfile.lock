@@ -13,8 +13,16 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
+    artii (2.1.2)
+    catpix (0.2.0)
+      docopt (~> 0.5, >= 0.5.0)
+      rmagick (~> 2.15, >= 2.15.2)
+      ruby-terminfo (~> 0.1, >= 0.1.1)
+      tco (~> 0.1, >= 0.1.8)
     coderay (1.1.2)
+    colorize (0.8.1)
     concurrent-ruby (1.1.4)
+    docopt (0.6.1)
     equatable (0.5.0)
     i18n (1.5.3)
       concurrent-ruby (~> 1.0)
@@ -32,6 +40,8 @@ GEM
     rack-protection (2.0.5)
       rack
     require_all (2.0.0)
+    rmagick (2.16.0)
+    ruby-terminfo (0.1.1)
     sinatra (2.0.5)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -46,6 +56,7 @@ GEM
       unicode-display_width (~> 1.4.0)
       unicode_utils (~> 1.4.0)
     strings-ansi (0.1.0)
+    tco (0.1.8)
     thread_safe (0.3.6)
     tilt (2.0.9)
     timers (4.3.0)
@@ -78,6 +89,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  artii
+  catpix
+  colorize
   pry
   require_all
   sinatra-activerecord

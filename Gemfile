@@ -7,3 +7,6 @@ gem "pry"
 gem "require_all"
 gem 'tty-table'
 gem 'tty-prompt'
+gem 'catpix'
+gem 'artii'
+gem "colorize"

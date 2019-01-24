@@ -13,6 +13,7 @@ class Fight < ActiveRecord::Base
 
   # performs the battle mechanics and calls declare_winner and update_combat
   def battle(superhero:, villain:)
+  	system "clear"
     villain.catchprases
     hero_score = (superhero.power + superhero.combat) + rand(50)
     villain_score = (villain.power + villain.combat) + rand(50)
