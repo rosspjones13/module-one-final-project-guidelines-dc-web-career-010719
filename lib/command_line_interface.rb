@@ -38,10 +38,11 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
       menu.choice 'Start a fight', 1
       menu.choice 'Train for battle', 2
-      menu.choice 'Display Stats', 3
-      menu.choice 'Display Instructions', 4
-      menu.choice 'Display Leaderboard', 5
-      menu.choice 'Exit', 6
+      menu.choice 'Start Quest', 3
+      menu.choice 'Display Stats', 4
+      menu.choice 'Display Instructions', 5
+      menu.choice 'Display Leaderboard', 6
+      menu.choice 'Exit', 7
     end
     self.start_game_loop(selection)
   end
@@ -54,19 +55,20 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     when 2
       @todays_hero.train
     when 3
-      @todays_hero.display_stats
+      run_quest
     when 4
-      display_instructions
+      @todays_hero.display_stats
     when 5
-      display_board
+      display_instructions
     when 6
+      display_board
+    when 7
       return      
     end
     display_menu
   end
 
   def parse_players(player)
-    # binding.pry
     #displays the superhero leaderboard by combat
     board = player.each_with_index.map do |s, i|
       [i+1, s.name, s.power, s.combat]
@@ -74,6 +76,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
   end
 
   def display_board
+    system "clear"
     header = ['#', 'Player', 'Power', 'Combat']
     rows = parse_players(Superhero.order(combat: :desc))
     table = TTY::Table.new header, rows
@@ -109,12 +112,51 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
     end while !input_check("M")
   end
 
-
   def run_quest
+    original_power = @todays_hero.power
+    system "clear"
     Quest.show_quests
     journey = Quest.find_quest
     power_update = journey.play_quest
     @todays_hero.increase_power_by(power_update)
+    system "clear"
+    if @todays_hero.power > original_power
+      puts "Congrats! Your power increased by #{power_update}."
+      puts "Your power is now #{@todays_hero.power}."
+    elsif @todays_hero.power == original_power
+      puts "Evil doesn't wait for the slow and idle."
+      puts "Your power remains #{@todays_hero.power}."
+    elsif @todays_hero.power < original_power
+      puts "The world weeps for the strong and courageous."
+      puts "Your power has decreased to #{@todays_hero.power}."
+    end
+  end
+
+  def goodbye
+    puts "
+                    ***********************
+               *********************************
+           *******   *     *       *    *    *******
+        *******   ***      **     **     ***   *******
+      ******   *****       *********      *****    *****
+    ******  ********       *********       ******    *****
+   ****   **********       *********       *********   *****
+  ****  **************    ***********     ************   ****
+ ****  *************************************************  ****
+****  ***************************************************  ****
+****  ****************************************************  ****
+****  ****************************************************  ****
+ ****  ***************************************************  ****
+  ****  *******     ****  ***********  ****     *********  ****
+   ****   *****      *      *******      *      ********  ****
+    *****   ****             *****             ******   *****
+      *****   **              ***              **    ******
+       ******   *              *              *   *******
+         *******                                *******
+            ********                         *******
+               *********************************
+                    ***********************"
+        puts "\n\n\n\nGo Forth and Prosper"
   end
 
 end

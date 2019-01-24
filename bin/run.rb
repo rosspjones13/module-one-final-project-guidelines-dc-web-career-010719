@@ -7,10 +7,12 @@ new_game.set_todays_hero
 system "clear"
 new_game.display_menu
 
-new_game.display_board
+# new_game.display_board
 
-# Quest.find(1).start_quest
-new_game.run_quest
+# # Quest.find(1).start_quest
+# new_game.run_quest
 
-binding.pry
-puts "Go forth and prosper"
+# binding.pry
+system "clear"
+
+new_game.goodbye

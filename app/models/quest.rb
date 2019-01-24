@@ -57,6 +57,7 @@ class Quest < ActiveRecord::Base
   def play_quest
     @power = 0
     scenarios.each do |scenario|
+      system "clear"
       puts scenario.description
       display_scenario_selections
     end

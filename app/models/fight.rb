@@ -4,6 +4,7 @@ class Fight < ActiveRecord::Base
 
   # starts a battle sequence and calls helper methods display_villains, battle, declare_winner, and update_combat
   def start_battle(todays_hero)
+    system "clear"
     puts "\n***************************\n"
     puts "\nWho would you like to battle?\n"
     display_villains
@@ -15,6 +16,7 @@ class Fight < ActiveRecord::Base
 
   # performs the battle mechanics and calls declare_winner and update_combat
   def battle(superhero:, villain:)
+    system "clear"
     villain.catchprases
     hero_score = (superhero.power + superhero.combat) + rand(50)
     villain_score = (villain.power + villain.combat) + rand(50)
@@ -27,6 +29,7 @@ class Fight < ActiveRecord::Base
 
  	# displays both scores then declares the winner and returns a boolean
   def declare_winner(hero_score, villain_score)
+    puts "\n***************************\n"
     puts "Hero score: #{hero_score}"
     puts "Villain score: #{villain_score}"
     if hero_score > villain_score
@@ -42,8 +45,9 @@ class Fight < ActiveRecord::Base
   def update_combat(winner, loser)
     winner.combat += 10
     loser.combat -= 10
-    puts "#{winner.name}'s combat has increased by 10! It is now #{winner.combat}"
-    puts "#{loser.name}'s combat has decreased by 10! It is now #{loser.combat}"
+    puts "#{winner.name}'s combat has increased by 10! It is now #{winner.combat}."
+    puts "#{loser.name}'s combat has decreased by 10! It is now #{loser.combat}.\n\n"
+    puts "***************************\n"
   end
 
   # displays the villains leaderboard by power
