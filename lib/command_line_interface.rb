@@ -61,7 +61,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     when 3
       run_quest
     when 4
-      # print_picture(@todays_hero.img)
+      print_picture(@todays_hero.img)
       @todays_hero.display_stats
     when 5
       display_instructions
