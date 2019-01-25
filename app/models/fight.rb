@@ -54,6 +54,6 @@ class Fight < ActiveRecord::Base
     selection = TTY::Prompt.new.select("Who would you like to battle?", villain_array, 
       per_page: 30, filter: true, cycle: true)
     selection = Villain.find_by(name: selection.split(" | ").first)
-    self.villain_id = selection.id
+    self.villain = selection
   end
 end
