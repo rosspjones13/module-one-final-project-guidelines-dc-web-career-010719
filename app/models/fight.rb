@@ -2,7 +2,7 @@ class Fight < ActiveRecord::Base
   belongs_to :villain
   belongs_to :superhero
 
-  # starts a battle sequence and calls helper methods display_villains, battle, declare_winner, and update_combat
+#Starts a battle sequence and calls helper methods display_villains, battle, declare_winner, and update_combat
   def start_battle(todays_hero)
     system "clear"
     puts "\n***************************\n"
@@ -10,9 +10,8 @@ class Fight < ActiveRecord::Base
     # battle(superhero: todays_hero, villain: Villain.find_by(id: villain_id))
   end
 
-  # performs the battle mechanics and calls declare_winner and update_combat
+#Performs the battle mechanics and calls declare_winner and update_combat
   def battle(superhero:, villain:)
-  	# system "clear"
     villain.catchprases
     hero_score = (superhero.power + superhero.combat) + rand(50)
     villain_score = (villain.power + villain.combat) + rand(50)
@@ -25,7 +24,7 @@ class Fight < ActiveRecord::Base
     self.save
  	end
 
- 	# displays both scores then declares the winner and returns a boolean
+# displays both scores then declares the winner and returns a boolean
   def declare_winner(hero_score, villain_score)
     puts "\n***************************\n"
     puts "Hero score: #{hero_score}"
@@ -39,7 +38,7 @@ class Fight < ActiveRecord::Base
     end
   end
 
-  # updates both winner and losers combat and displays
+# updates both winner and losers combat and displays
   def update_combat(winner, loser)
     winner.combat += 10
     winner.combat = 100 if winner.combat > 100

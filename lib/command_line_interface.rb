@@ -86,7 +86,7 @@ leader board! Do you think you have what it takes to reach the top?\n\n"
     end
   end
 
-  #Displays the top ten superheros based on combat in descending order
+#Displays the top ten superheros based on combat in descending order
   def display_board
     system "clear"
     puts "Super Fight Bros. Leaderboard by Combat"
@@ -105,7 +105,7 @@ leader board! Do you think you have what it takes to reach the top?\n\n"
     Superhero.find_or_create_by(name: hero_name)
   end
 
-  
+#Helper method to check the input of the user
   def input_check(check)
     input = gets.chomp.upcase
     if input == check
@@ -116,6 +116,7 @@ leader board! Do you think you have what it takes to reach the top?\n\n"
     end
   end
 
+#Displays the instructions of the games
   def display_instructions
     system "clear"
     title_print
@@ -131,6 +132,7 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
     end while !input_check("M")
   end
 
+#Starts the quest loop
   def run_quest
     original_power = @todays_hero.power
     system "clear"
@@ -151,20 +153,24 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
     @todays_hero.save
   end
 
+#Goodbye message
   def goodbye
     puts "\n\n\nGo Forth and Prosper"
   end
   
+#Prints the title
   def title_print
     title = Artii::Base.new :font => 'slant'
     puts title.asciify('Super Fight Bros.').colorize(:red)
   end
 
+#Prints the title based on input
   def subtitle_print(words)
     title = Artii::Base.new :font => 'slant'
       puts title.asciify(words).colorize(:blue)
   end
 
+#Prints the picture of the superhero or villain
   def print_picture(image)
     system "clear"
     Catpix::print_image image,
