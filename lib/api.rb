@@ -6,9 +6,9 @@ class Api
 
 	def get_all_characters
     @all_character_data = []
-    url = "https://superheroapi.com/api.php/<api id>/"
+    url = "https://superheroapi.com/api.php/<api_key>/"
     uri = URI.parse(url)
-    for i in 1..50
+    for i in 600..650
       data = uri + "#{i}"
       response = Net::HTTP.get_response(data)
       self.all_character_data << JSON.parse(response.body)
