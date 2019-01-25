@@ -64,7 +64,6 @@ leader board! Do you think you have what it takes to reach the top?\n\n"
       url = URI.parse(@enemy.img)
       res = test_url(url)
       print_picture(url) if res.code == "200"
-      # print_picture(self.enemy.img)
       new_fight.battle(superhero: todays_hero, villain: self.enemy)
     when 2
       @todays_hero.train
