@@ -1,4 +1,5 @@
 require 'pry'
+require "net/http"
 
 class CLI
   attr_accessor :todays_hero, :enemy
@@ -60,14 +61,19 @@ leader board! Do you think you have what it takes to reach the top?\n\n"
       new_fight = Fight.new(superhero: todays_hero)
       new_fight.start_battle(todays_hero)
       @enemy = Villain.find_by(id: new_fight.villain_id)
-      print_picture(self.enemy.img)
+      url = URI.parse(@enemy.img)
+      res = test_url(url)
+      print_picture(url) if res.code == "200"
+      # print_picture(self.enemy.img)
       new_fight.battle(superhero: todays_hero, villain: self.enemy)
     when 2
       @todays_hero.train
     when 3
       run_quest
     when 4
-      print_picture(@todays_hero.img)
+      url = URI.parse(@todays_hero.img)
+      res = test_url(url)
+      print_picture(url) if res.code == "200"
       @todays_hero.display_stats
     when 5
       display_instructions
@@ -183,4 +189,10 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
       :resolution => "high"
   end
 
+  def test_url(url_string)
+    url = URI.parse(@todays_hero.img)
+    req = Net::HTTP.new(url.host, url.port)
+    req.use_ssl = true
+    req.request_head(url.path)
+  end
 end
