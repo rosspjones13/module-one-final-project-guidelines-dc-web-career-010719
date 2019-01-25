@@ -8,11 +8,14 @@ class Api
     @all_character_data = []
     url = "https://superheroapi.com/api.php/<api_key>/"
     uri = URI.parse(url)
+<<<<<<< HEAD
     for i in 600..650
+=======
+		for i in 1..100
+>>>>>>> f5aa776c4e5113c3253f4e9d21af75935d42522f
       data = uri + "#{i}"
       response = Net::HTTP.get_response(data)
-      self.all_character_data << JSON.parse(response.body)
-      # binding.pry
+			self.all_character_data << JSON.parse(response.body)
 		end
 		take_data_from_all
 	end
