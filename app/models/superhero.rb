@@ -18,7 +18,6 @@ class Superhero < ActiveRecord::Base
   end
 
   def display_stats
-    # system "clear"
     puts "Power: #{self.power}. Combat: #{self.combat}"
     if self.power < 50 || self.combat < 50
       puts display_tips

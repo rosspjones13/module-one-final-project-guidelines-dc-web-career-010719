@@ -28,7 +28,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
       @todays_hero = create_new_player
     else
       select_hero = TTY::Prompt.new.select("Who would you like to be today?", Superhero.all.map(&:name), 
-        per_page: 15, filter: true)
+        per_page: 25, filter: true)
       @todays_hero = Superhero.find_by(name: select_hero)
     end
   end
@@ -54,8 +54,11 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
   def start_game_loop(selection)
     case selection
     when 1
-      new_fight = Fight.new(superhero: todays_hero, villain: enemy)
+      new_fight = Fight.new(superhero: todays_hero)
       new_fight.start_battle(todays_hero)
+      @enemy = Villain.find_by(id: new_fight.villain_id)
+      print_picture(self.enemy.img)
+      new_fight.battle(superhero: todays_hero, villain: self.enemy)
     when 2
       @todays_hero.train
     when 3
