@@ -9,12 +9,13 @@ class Superhero < ActiveRecord::Base
     if self.power >= 100
       self.power = 100
     end
-    # self.save
+    self.save
     puts "Your power is now #{self.power}.\n\n"
   end
 
   def display_tips
-    ["Consider training or joining a quest to increase your power.", "Consider fighing a weaker opponent to increase your combat."].sample
+    ["Consider training or joining a quest to increase your power.", 
+    "Consider fighing a weaker opponent to increase your combat."].sample
   end
 
   def display_stats
@@ -30,4 +31,5 @@ class Superhero < ActiveRecord::Base
   def increase_power_by(power_update)
     self.power += power_update
   end
+  # self.save
 end

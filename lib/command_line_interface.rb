@@ -43,9 +43,9 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
       menu.choice 'Start a fight', 1
       menu.choice 'Train for battle', 2
       menu.choice 'Display Stats', 3
-      menu.choice 'Display Instructions', 4
-      menu.choice 'Display Leaderboard', 5
-      menu.choice 'Show Image', 6
+      menu.choice 'Start Quest', 4
+      menu.choice 'Display Instructions', 5
+      menu.choice 'Display Leaderboard', 6
       menu.choice 'Exit', 7
     end
     self.start_game_loop(selection)
@@ -54,19 +54,19 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
   def start_game_loop(selection)
     case selection
     when 1
-      new_fight = Fight.new(superhero: todays_hero, villain: enemy)
+      new_fight = Fight.create(superhero: todays_hero, villain: enemy)
       new_fight.start_battle(todays_hero)
     when 2
       @todays_hero.train
     when 3
-      run_quest
-    when 4
       @todays_hero.display_stats
+    when 4
+      run_quest
     when 5
       display_instructions
     when 6
       display_board
-      print_picture("batman.jpg")
+      # print_picture("batman.jpg")
     when 7
       return      
     end
@@ -83,14 +83,14 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
   def display_board
     system "clear"
     header = ['#', 'Player', 'Power', 'Combat']
-    rows = parse_players(Superhero.order(combat: :desc))
+    rows = parse_players(Superhero.order(combat: :desc).limit(10))
     table = TTY::Table.new header, rows
     puts table.render(:unicode)
   end
 
   def create_new_player
     hero_name = TTY::Prompt.new.ask('What is your Superhero\'s name?', default: 'Anonymous')
-    Superhero.new(name: hero_name)
+    Superhero.find_or_create_by(name: hero_name)
   end
 
   def input_check(check)
@@ -136,33 +136,11 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
       puts "The world weeps for the strong and courageous."
       puts "Your power has decreased to #{@todays_hero.power}."
     end
+    @todays_hero.save
   end
 
   def goodbye
-    puts "
-                    ***********************
-               *********************************
-           *******   *     *       *    *    *******
-        *******   ***      **     **     ***   *******
-      ******   *****       *********      *****    *****
-    ******  ********       *********       ******    *****
-   ****   **********       *********       *********   *****
-  ****  **************    ***********     ************   ****
- ****  *************************************************  ****
-****  ***************************************************  ****
-****  ****************************************************  ****
-****  ****************************************************  ****
- ****  ***************************************************  ****
-  ****  *******     ****  ***********  ****     *********  ****
-   ****   *****      *      *******      *      ********  ****
-    *****   ****             *****             ******   *****
-      *****   **              ***              **    ******
-       ******   *              *              *   *******
-         *******                                *******
-            ********                         *******
-               *********************************
-                    ***********************"
-        puts "\n\n\n\nGo Forth and Prosper"
+    puts "\n\n\nGo Forth and Prosper"
   end
   
   def title_print

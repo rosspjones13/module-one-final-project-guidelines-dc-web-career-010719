@@ -16,29 +16,29 @@ class Quest < ActiveRecord::Base
   end
 
   def self.find_quest
-    puts "\n**************************\n\n"
-    puts "Please select your journey!"
-    Quest.find_by(name: gets.chomp)
+    puts "\n**************************\n\n" 
+    select_quest = TTY::Prompt.new.select("Please select your journey!", Quest.all.map(&:name), 
+    per_page: 15, filter: true)
+    Quest.find_by(name: select_quest)
   end
 
 
 #Selection Options
-  @choice = {
+def choice
+  {
     good:["Perform heroic act", "Save the day!", "Use powers to defend citizens"],
     bad: ["Do nothing", "Run away", "Use powers for evil"],
     neutral:["Ask someone else", "Phone a friend", "Use powers to take a nap"]
-  }
+}.map {|x, y| y.sample}
+
+end
 
 
 #display scenario selection options
   def display_scenario_selections
-    prompt = TTY::Prompt.new
-    @selection = prompt.select("Make your selection") do |menu|
-      menu.enum "."
-      menu.choice "Do something good", 1
-      menu.choice "Do something bad", 2
-      menu.choice "Do nothing", 3
-    end
+    # prompt = TTY::Prompt.new
+    choice
+    scenario = TTY::Prompt.new.select("", choice)
     power_increase(@selection)
   end
 
@@ -53,7 +53,7 @@ class Quest < ActiveRecord::Base
       @power
   end
 
-#displays  scenario and give them an option. Game should stop to wait for input.
+#displays  scenario and give users an option. Game should stop to wait for input.
   def play_quest
     @power = 0
     scenarios.each do |scenario|
