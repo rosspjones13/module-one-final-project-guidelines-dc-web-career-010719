@@ -6,16 +6,13 @@ class Fight < ActiveRecord::Base
   def start_battle(todays_hero)
     system "clear"
     puts "\n***************************\n"
-    selection = display_villains
-    # binding.pry
-    enemy = Villain.find_by(name: selection.split(" | ")[0])
-    battle(superhero: todays_hero, villain: enemy)
-
+    display_villains
+    # battle(superhero: todays_hero, villain: Villain.find_by(id: villain_id))
   end
 
   # performs the battle mechanics and calls declare_winner and update_combat
   def battle(superhero:, villain:)
-  	system "clear"
+  	# system "clear"
     villain.catchprases
     hero_score = (superhero.power + superhero.combat) + rand(50)
     villain_score = (villain.power + villain.combat) + rand(50)
@@ -57,6 +54,8 @@ class Fight < ActiveRecord::Base
       "#{villain.name} | Power: #{villain.power} | Combat: #{villain.combat}"
     end
     selection = TTY::Prompt.new.select("Who would you like to battle?", villain_array, 
-			per_page: 20, filter: true, cycle: true)
+      per_page: 30, filter: true, cycle: true)
+    selection = Villain.find_by(name: selection.split(" | ").first)
+    self.villain = selection
   end
 end
