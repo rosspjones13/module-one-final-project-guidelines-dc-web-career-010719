@@ -118,7 +118,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     puts "Quests: Boost your power score and increase your chances of winning ore fights by going on a quest.
 The more scenarios you pass, the more your power increases, but beware! If you fail a quest, your power
 shall PLUMMET!\n\n"
-    puts "Tournaments: In a series of three fight sequences, the true winner shall prevail. This challenge is
+    puts "*Coming Soon* Tournaments: In a series of three fight sequences, the true winner shall prevail. This challenge is
 not for the faint of heart. Join a tournament and broadcast your glory for all the world to see.\n\n"
     begin 
       puts "Please press M to go back to the menu"
