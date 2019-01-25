@@ -42,10 +42,10 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
       menu.choice 'Start a fight', 1
       menu.choice 'Train for battle', 2
-      menu.choice 'Display Stats', 3
-      menu.choice 'Display Instructions', 4
-      menu.choice 'Display Leaderboard', 5
-      menu.choice 'Show Image', 6
+      menu.choice 'Go on a Quest', 3
+      menu.choice 'Show Stats', 4
+      menu.choice 'Display Instructions', 5
+      menu.choice 'Display Leaderboard', 6
       menu.choice 'Exit', 7
     end
     self.start_game_loop(selection)
@@ -61,12 +61,12 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     when 3
       run_quest
     when 4
+      # print_picture(@todays_hero.img)
       @todays_hero.display_stats
     when 5
       display_instructions
     when 6
       display_board
-      print_picture("batman.jpg")
     when 7
       return      
     end
