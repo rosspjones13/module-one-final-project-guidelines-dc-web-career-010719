@@ -3,19 +3,20 @@ require 'pry'
 class CLI
   attr_accessor :todays_hero, :enemy
 
-
+#Welcomes the user and provides information about program.
   def welcome
     system "clear"
     title_print
     puts "Welcome to Super Fight Bros. The goal of this game is to become the ultimate fight master.
 When you create a new user, your Power  and Combat are automatically set at 25. Through a series of
 fights, quests, and tournaments, you can increase these attributes to win more fights and climb the
-leader board! Do you think you have what it takes to top the leader board?\n\n"
+leader board! Do you think you have what it takes to reach the top?\n\n"
     begin 
       puts "Please press C to continue"
     end while !input_check("C")
   end
 
+#Creates a new hero if the user chooses to, or, it searches the superheros table for instantiated superheros.
   def set_todays_hero
     system "clear"
     title_print
@@ -33,6 +34,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     end
   end
 
+#Displays the table of contents and prompts the user to make a selection
   def display_menu
     title_print
     puts "Hi #{@todays_hero.name}!"
@@ -51,6 +53,7 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     self.start_game_loop(selection)
   end
 
+#Calls the helper methods based on the selection made from #display_menu
   def start_game_loop(selection)
     case selection
     when 1
@@ -76,13 +79,14 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     display_menu
   end
 
+#Helper method to get the players n the correct format to display as a table (according to the table gem we used)
   def parse_players(player)
-    #displays the superhero leaderboard by combat
-    board = player.each_with_index.map do |s, i|
+    player.each_with_index.map do |s, i|
       [i+1, s.name, s.power, s.combat]
     end
   end
 
+  #Displays the top ten superheros based on combat in descending order
   def display_board
     system "clear"
     puts "Super Fight Bros. Leaderboard by Combat"
@@ -95,11 +99,13 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
     end while !input_check("M")
   end
 
+#Creates or finds a new player based on user input
   def create_new_player
     hero_name = TTY::Prompt.new.ask('What is your Superhero\'s name?', default: 'Anonymous')
     Superhero.find_or_create_by(name: hero_name)
   end
 
+  
   def input_check(check)
     input = gets.chomp.upcase
     if input == check

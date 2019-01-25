@@ -42,10 +42,14 @@ class Fight < ActiveRecord::Base
   # updates both winner and losers combat and displays
   def update_combat(winner, loser)
     winner.combat += 10
+    winner.combat = 100 if winner.combat > 100
     loser.combat -= 10
+    loser.combat = 0 if loser.combat < 0
     puts "#{winner.name}'s combat has increased by 10! It is now #{winner.combat}."
     puts "#{loser.name}'s combat has decreased by 10! It is now #{loser.combat}.\n\n"
     puts "***************************\n"
+    winner.save
+    loser.save
   end
 
   # displays the villains leaderboard by power
