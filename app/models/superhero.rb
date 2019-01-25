@@ -5,7 +5,7 @@ class Superhero < ActiveRecord::Base
   def train
   #increases superhero's power by ten and saves to the database. Power does not go over 100.
     system "clear"
-    self.power += 10
+    self.power += 2
     if self.power >= 100
       self.power = 100
     end

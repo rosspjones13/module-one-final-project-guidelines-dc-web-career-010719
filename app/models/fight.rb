@@ -10,6 +10,7 @@ class Fight < ActiveRecord::Base
     # binding.pry
     enemy = Villain.find_by(name: selection.split(" | ")[0])
     battle(superhero: todays_hero, villain: enemy)
+
   end
 
   # performs the battle mechanics and calls declare_winner and update_combat
@@ -23,6 +24,8 @@ class Fight < ActiveRecord::Base
     else
       update_combat(villain, superhero)
     end
+    superhero.save
+    self.save
  	end
 
  	# displays both scores then declares the winner and returns a boolean

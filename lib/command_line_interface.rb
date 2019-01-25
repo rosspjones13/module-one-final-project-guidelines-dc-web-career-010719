@@ -82,10 +82,14 @@ leader board! Do you think you have what it takes to top the leader board?\n\n"
 
   def display_board
     system "clear"
+    puts "Super Fight Bros. Leaderboard by Combat"
     header = ['#', 'Player', 'Power', 'Combat']
     rows = parse_players(Superhero.order(combat: :desc).limit(10))
     table = TTY::Table.new header, rows
     puts table.render(:unicode)
+    begin 
+      puts "Please press M to go back to the menu"
+    end while !input_check("M")
   end
 
   def create_new_player
@@ -121,9 +125,8 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
   def run_quest
     original_power = @todays_hero.power
     system "clear"
-    Quest.show_quests
-    journey = Quest.find_quest
-    power_update = journey.play_quest
+    subtitle_print('Start Quest')
+    power_update = Quest.find_new
     @todays_hero.increase_power_by(power_update)
     system "clear"
     if @todays_hero.power > original_power
@@ -131,7 +134,7 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
       puts "Your power is now #{@todays_hero.power}."
     elsif @todays_hero.power == original_power
       puts "Evil doesn't wait for the slow and idle."
-      puts "Your power remains #{@todays_hero.power}."
+      puts "Your power remains at #{@todays_hero.power}."
     elsif @todays_hero.power < original_power
       puts "The world weeps for the strong and courageous."
       puts "Your power has decreased to #{@todays_hero.power}."
@@ -146,6 +149,11 @@ not for the faint of heart. Join a tournament and broadcast your glory for all t
   def title_print
     title = Artii::Base.new :font => 'slant'
     puts title.asciify('Super Fight Bros.').colorize(:red)
+  end
+
+  def subtitle_print(words)
+    title = Artii::Base.new :font => 'slant'
+      puts title.asciify(words).colorize(:blue)
   end
 
   def print_picture(image)
